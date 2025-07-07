@@ -1,8 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { OpenAIEmbeddings } from 'langchain/embeddings/openai';
-import { Chroma } from 'langchain/vectorstores/chroma';
+import { ChromaOperator } from '@/operators/chromaOperator';
 import { makeChain } from '@/utils/makechain';
-import { COLLECTION_NAME } from '@/config/chroma';
 
 export default async function handler(
   req: NextApiRequest,
@@ -25,17 +23,10 @@ export default async function handler(
   const sanitizedQuestion = question.trim().replaceAll('\n', ' ');
 
   try {
-
-    /* create vectorstore*/
-    const vectorStore = await Chroma.fromExistingCollection(
-      new OpenAIEmbeddings({}),
-      {
-        collectionName: COLLECTION_NAME,
-       },
-    );
+    const operator = await ChromaOperator.getInstance();
 
     //create chain
-    const chain = makeChain(vectorStore);
+    const chain = makeChain(operator.store);
     //Ask a question using chat history
     const response = await chain.call({
       question: sanitizedQuestion,
