@@ -36,6 +36,13 @@ yarn install
 
 After installation, you should now see a `node_modules` folder.
 
+Run a quick sanity check to ensure the environment is set up correctly:
+
+```bash
+npm run lint
+npm run type-check
+```
+
 4. Set up your `.env` file
 
 - Copy `.env.example` into `.env`
@@ -44,6 +51,7 @@ After installation, you should now see a `node_modules` folder.
 ```
 OPENAI_API_KEY=
 COLLECTION_NAME=
+CHROMA_URL=http://localhost:8000
 
 ```
 
@@ -52,7 +60,7 @@ COLLECTION_NAME=
 
 5. In `utils/makechain.ts` chain change the `QA_PROMPT` for your own usecase. Change `modelName` in `new OpenAI` to `gpt-4`, if you have access to `gpt-4` api. Please verify outside this repo that you have access to `gpt-4` api, otherwise the application will not work.
 
-6. In a new terminal window, run Chroma in the Docker container:
+6. In a new terminal window, run Chroma in the Docker container (adjust the port if you modify `CHROMA_URL`):
 
 ```
 docker run -p 8000:8000 ghcr.io/chroma-core/chroma:0.3.21
@@ -63,10 +71,23 @@ docker run -p 8000:8000 ghcr.io/chroma-core/chroma:0.3.21
 **This repo can load multiple PDF files**
 
 1. Inside `docs` folder, add your pdf files or folders that contain pdf files.
+2. (Optional) Organize files into case folders using the helper script:
 
-2. Run the script `npm run ingest` to 'ingest' and embed your docs. If you run into errors troubleshoot below.
+   ```bash
+   npm run organize -- docs case-map.json
+   ```
 
-3. Check Pinecone dashboard to verify your namespace and vectors have been added.
+   The `case-map.json` file maps case names to filename keywords and is used to
+   sort and rename PDFs into dedicated subdirectories.
+
+3. Run the script `npm run ingest` to ingest and embed your docs. You may pass
+   a directory path as an argument (defaults to `docs`). Append `--keep` to
+   preserve any existing collection instead of resetting it. The ingestion
+   process relies on a dedicated **ChromaOperator** class for improved vector
+   store management. Ensure `CHROMA_URL` in your `.env` points to the running
+   Chroma instance. If you run into errors, troubleshoot below.
+
+4. Check Pinecone dashboard to verify your namespace and vectors have been added.
 
 ## Run the app
 

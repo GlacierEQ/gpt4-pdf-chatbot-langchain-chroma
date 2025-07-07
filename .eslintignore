@@ -1,0 +1,11 @@
+node_modules
+.next
+out
+build
+coverage
+.eslintcache
+*.tsbuildinfo
+next-env.d.ts
+Codex_Agent_*.sh
+blockchain_vault.log
+timeline.log
