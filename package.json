@@ -10,7 +10,7 @@
     "build": "next build",
     "start": "next start",
     "type-check": "tsc --noEmit",
-    "lint": "eslint --ignore-path .gitignore \"**/*.+(ts|js|tsx)\"",
+    "lint": "./node_modules/.bin/eslint --config .eslintrc.json --ext .js,.ts,.tsx .",
     "format": "prettier --ignore-path .gitignore \"**/*.+(ts|js|tsx)\" --write",
     "ingest": "tsx -r dotenv/config scripts/ingest-data.ts"
   },
