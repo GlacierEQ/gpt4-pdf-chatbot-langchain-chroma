@@ -36,5 +36,14 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# Codex agent artifacts
+blockchain_vault.log
+timeline.log
+Codex_Agent_*.sh
+
+# Yarn v4 artifacts
+.yarn/
+.yarnrc.yml
+
 #Notion_db
 /Notion_DB
