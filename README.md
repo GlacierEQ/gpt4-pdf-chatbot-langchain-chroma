@@ -72,6 +72,16 @@ docker run -p 8000:8000 ghcr.io/chroma-core/chroma:0.3.21
 
 Once you've verified that the embeddings and content have been successfully added to your Pinecone, you can run the app `npm run dev` to launch the local dev environment, and then type a question in the chat interface.
 
+
+## Multi-Agent Sequential Reasoning Demo
+Run a simple demo of collaborative agents after ingesting your PDFs.
+Ensure that `COLLECTION_NAME` and `OPENAI_API_KEY` are set in your `.env` file and
+that you have installed dependencies with `npm install` or `yarn install` before running:
+
+```bash
+npx tsx -r dotenv/config scripts/multi-agent.ts "What is my document about?"
+```
+
 ## Troubleshooting
 
 In general, keep an eye out in the `issues` and `discussions` section of this repo for solutions.
